@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs'
 import { join } from 'path'
-import { roundScoreVerbose } from './scores'
+
 const data: string[] = readFileSync(join(__dirname, './data.txt'), 'utf-8').split('\n')
 
 const lookup = new Map<string, number>(
@@ -15,10 +15,8 @@ const lookup = new Map<string, number>(
 
 const part1 = data
     .map(
-        r => Array.from(new Set(r.slice(0, r.length / 2))).filter((c) => new Set(r.slice(r.length / 2)).has(c))
+        r => lookup.get(Array.from(new Set(r.slice(0, r.length / 2))).filter((c) => new Set(r.slice(r.length / 2)).has(c))[0])
     )
-    .flat()
-    .map(item => lookup.get(item))
     .reduce((a, b) => a + b, 0)
 
 const part2 = data
